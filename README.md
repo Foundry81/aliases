@@ -1,4 +1,4 @@
-# aliases
+# Aliases
 
 A growing collection of opinionated shell aliases focused on clarity, safety, and operational sanity.
 
@@ -99,7 +99,7 @@ Aliases should:
 
 If an alias makes you less aware of what’s happening, it doesn’t belong here.
 
-# Contributions
+## Contributions
 
 This repo is intentionally opinionated.
 
