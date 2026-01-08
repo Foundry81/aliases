@@ -1,0 +1,109 @@
+####################################################################
+# Docker Swarm Aliases
+#
+# Maintained by Foundry81
+# YouTube: https://www.youtube.com/@foundry81
+#
+# Purpose:
+# - Provide clear visibility into Swarm clusters
+# - Make service, node, and task inspection predictable
+# - Avoid “why did Swarm do that?” moments
+#
+# Safety Legend:
+# 🟢 Safe     - Read-only, no side effects
+# 🟡 Caution  - Informational, may precede changes
+# 🔴 Dangerous- Can disrupt services or cluster stability
+#
+####################################################################
+
+
+############################
+# Swarm & Cluster State   #
+############################
+
+alias dsinfo='docker info | sed -n "/Swarm:/,/Plugins:/p"'
+# 🟢 Swarm status, node count, and manager state
+
+alias dsnodes='docker node ls'
+# 🟢 List Swarm nodes
+
+alias dsnodei='docker node inspect'
+# 🟢 Inspect a Swarm node
+
+
+############################
+# Node Workload Visibility#
+############################
+
+alias dsnodeps='docker node ps'
+# 🟢 Show tasks running on a node
+
+
+############################
+# Service Visibility      #
+############################
+
+alias dssvc='docker service ls'
+# 🟢 List Swarm services and replica counts
+
+alias dssvcps='docker service ps'
+# 🟢 Show service tasks and placement
+
+alias dssvci='docker service inspect'
+# 🟢 Inspect service configuration
+
+alias dssvclogs='docker service logs -f'
+# 🟢 Follow logs across all replicas
+
+
+############################
+# Task-Level Debugging    #
+############################
+
+alias dstasks='docker service ps --no-trunc'
+# 🟢 Full task history with placement and failure reasons
+
+alias dstaski='docker inspect'
+# 🟢 Inspect an individual task container
+
+
+############################
+# Swarm Networking        #
+############################
+
+alias dsnetls='docker network ls'
+# 🟢 List Swarm and overlay networks
+
+alias dsneti='docker network inspect'
+# 🟢 Inspect overlay networks
+
+
+############################
+# Placement & Scheduling  #
+############################
+
+alias dslabels='docker node inspect -f "{{.Description.Hostname}}: {{.Spec.Labels}}"'
+# 🟢 View node labels
+
+alias dsavail='docker node inspect -f "{{.Description.Hostname}}: {{.Spec.Availability}}"'
+# 🟢 Show node scheduling availability
+
+
+############################
+# Rollouts & Lifecycle    #
+############################
+
+alias dssvcupd='docker service inspect -f "{{.Spec.UpdateConfig}}"'
+# 🟢 View rolling update configuration
+
+alias dssvcrm='docker service rm'
+# 🔴 Remove a service from the Swarm
+
+alias dsdrain='docker node update --availability drain'
+# 🔴 Drain a node
+
+alias dsactivate='docker node update --availability active'
+# 🟡 Reactivate a drained node
+
+alias dsnoderm='docker node rm'
+# 🔴 Remove a node from the Swarm (must be drained)

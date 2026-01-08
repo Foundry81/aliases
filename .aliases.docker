@@ -1,0 +1,131 @@
+####################################################################
+# Docker Aliases
+#
+# Maintained by Foundry81
+# YouTube: https://www.youtube.com/@foundry81
+#
+# Purpose:
+# - Improve day-to-day Docker visibility
+# - Reduce context switching and typo-driven mistakes
+# - Make common inspection tasks fast and repeatable
+#
+# Safety Legend:
+# 🟢 Safe     - Read-only, no side effects
+# 🟡 Caution  - Informational, often followed by cleanup actions
+# 🔴 Dangerous- Can remove data or disrupt services
+#
+# Source explicitly. Do NOT auto-load unless you understand each alias.
+####################################################################
+
+
+############################
+# Core Visibility & Status #
+############################
+
+alias dstats='docker stats'
+# 🟢 Live CPU, memory, network, and disk I/O stats for running containers
+
+alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}"'
+# 🟢 Human-readable list of running containers
+
+alias dpsa='docker ps -a'
+# 🟢 List all containers, including stopped ones
+
+
+#################################
+# Inspection & Runtime Metadata #
+#################################
+
+alias dinspect='docker inspect'
+# 🟢 Full container inspection (config, mounts, env, networks)
+
+alias dip='docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}"'
+# 🟢 Output a container's internal IP address
+
+alias drestart='docker inspect -f "{{.HostConfig.RestartPolicy.Name}}"'
+# 🟢 Show the configured restart policy for a container
+
+alias dtop='docker top'
+# 🟢 Show processes running inside a container
+
+
+############################
+# Logs & Live Debugging    #
+############################
+
+alias dlogs='docker logs -f'
+# 🟢 Follow container logs in real time
+
+alias dlogs50='docker logs -f --tail 50'
+# 🟢 Follow logs starting with the last 50 lines
+
+alias dlogs100='docker logs --tail 100'
+# 🟢 Show the last 100 log lines without following
+
+alias dexec='docker exec -it'
+# 🟢 Interactive shell into a running container
+
+
+############################
+# Networking Visibility   #
+############################
+
+alias dnetls='docker network ls'
+# 🟢 List Docker networks
+
+alias dneti='docker network inspect'
+# 🟢 Inspect Docker network configuration and attachments
+
+
+############################
+# Images & Build Insight  #
+############################
+
+alias dimages='docker images'
+# 🟡 List local Docker images
+
+alias dimgh='docker history'
+# 🟢 Show image layer history (spot bloat)
+
+alias dimgi='docker image inspect'
+# 🟢 Inspect image metadata and entrypoints
+
+alias dimgd='docker images -f "dangling=true"'
+# 🟡 List dangling (untagged) images
+
+
+############################
+# Storage & Volume Insight#
+############################
+
+alias dvolinspect='docker volume inspect'
+# 🟡 Inspect volume configuration and metadata
+
+alias dvolmount='docker volume inspect -f "{{.Mountpoint}}"'
+# 🟢 Show host filesystem path for a volume
+
+alias dvoldriver='docker volume inspect -f "Driver: {{.Driver}} / Scope: {{.Scope}}"'
+# 🟢 Display volume driver and scope
+
+alias dvoldangling='docker volume ls -f "dangling=true"'
+# 🟡 List unused volumes
+
+alias ddfv='docker system df -v'
+# 🟡 Verbose disk usage, including per-volume size
+
+
+############################
+# Disk Usage & Cleanup    #
+############################
+
+alias ddf='docker system df'
+# 🟡 Docker disk usage summary
+
+alias dprune='docker system prune'
+# 🔴 Remove stopped containers, unused networks, and dangling images
+
+alias dprunea='docker system prune -a'
+# 🔴 Remove all unused images (forces rebuilds)
+
+alias dvolprune='docker volume prune'
+# 🔴 Permanently delete unused volumes (data loss)
