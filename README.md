@@ -3,6 +3,7 @@
 A growing collection of opinionated shell aliases focused on clarity, safety, and operational sanity.
 
 Maintained by **Foundry81**
+
 YouTube: https://www.youtube.com/@foundry81
 
 ---
