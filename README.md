@@ -94,7 +94,7 @@ It assumes:
 
 Aliases should:
 
-- Make common tasks obvious\
+- Make common tasks obvious
 - Reduce typo-driven mistakes
 - Never hide destructive behavior
 
