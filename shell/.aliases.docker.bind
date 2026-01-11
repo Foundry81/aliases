@@ -1,0 +1,75 @@
+#######################################################################
+# Dockerized BIND Aliases
+# Maintained by Foundry81
+#
+# Purpose:
+# - Simplify administration of BIND running in a Docker container
+# - Provide safe, composable shortcuts for zone management, queries, and troubleshooting
+# - Reduce typing while keeping commands readable
+#
+# Dependency:
+# - Requires Docker and a container named 'bind' running BIND
+#
+# TLP Legend:
+# 🟢 Safe – commands that only inspect or monitor, no impact
+# 🟡 Caution – commands that enter the container shell or may show lots of info but don’t directly alter state
+# 🔴 Dangerous – commands that restart containers, reload zones, modify state, or do a zone transfer
+#######################################################################
+
+#########################
+# Container Management
+#########################
+
+# Attach to the BIND container shell
+alias bindsh='docker exec -it bind /bin/bash'                     # 🟡 Caution
+
+# View container logs in real time
+alias bindlogs='docker logs -f bind'                              # 🟢 Safe
+
+# View last 50 lines and follow logs
+alias bindlogtail='docker logs -f --tail 50 bind'                 # 🟢 Safe
+
+# Restart the BIND container (reload config, all zones)
+alias bindrestart='docker restart bind'                           # 🔴 Dangerous
+
+#########################
+# RNDC Commands (Zone Administration)
+#########################
+
+# Reload all zones
+alias bindreload='docker exec -it bind rndc reload'               # 🔴 Dangerous
+
+# Reload a specific zone (replace <zone> with actual name)
+alias bindreloadzone='docker exec -it bind rndc reload <zone>'    # 🔴 Dangerous
+
+# Freeze a zone for editing
+alias bindfreeze='docker exec -it bind rndc freeze <zone>'        # 🔴 Dangerous
+
+# Thaw a frozen zone
+alias bindthaw='docker exec -it bind rndc thaw <zone>'            # 🔴 Dangerous
+
+# Query zone statistics
+alias bindstats='docker exec -it bind rndc stats'                 # 🟢 Safe
+
+# Dump BIND server configuration (all zones)
+alias bindconf='docker exec -it bind rndc dumpdb -zones'          # 🟢 Safe
+
+#########################
+# DNS Query / Troubleshooting
+#########################
+
+# Quick dig against the BIND container
+alias binddig='docker exec -it bind dig @localhost'               # 🟢 Safe
+
+# Check zone SOA record
+alias bindsoa='docker exec -it bind dig @localhost <zone> SOA'    # 🟢 Safe
+
+# Query all records for a zone (zone transfer)
+alias bindaxfr='docker exec -it bind dig @localhost <zone> AXFR'  # 🔴 Dangerous
+
+#########################
+# Monitoring Enhancements
+#########################
+
+# Watch BIND server status every 5 seconds
+alias bindwatch='watch -n 5 "docker exec bind rndc status"'       # 🟢 Safe
