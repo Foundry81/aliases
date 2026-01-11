@@ -1,0 +1,111 @@
+#######################################################################
+# Git Aliases
+# Maintained by Foundry81
+# YouTube: https://www.youtube.com/@foundry81
+#
+# Purpose:
+# - Make Git commands easier to type and remember
+# - Encourage safer workflows (review before destructive actions)
+# - Provide readable output for logs, diffs, and history
+#
+# Learning Legend:
+# Safe      - No risk, readonly, only shows information
+# Helpful   - Improves context or efficiency
+# Power     - Combines multiple actions, use with understanding
+#
+# Add this section into your ~/.gitconfig or ~/.gitconfig.d/*.gitconfig
+#######################################################################
+
+[alias]
+
+  #########################
+  # Basic Navigation
+  #########################
+
+  # Show a compact status with branch and staged context (→ faster context at a glance)
+  st = status -sb                            # Safe
+
+  # Shorthands for common objects (checkout / branch / commit)
+  co = checkout                              # Safe
+  br = branch                                # Safe
+  ci = commit                                # Safe
+
+  # Commit with a message (avoids forgetting -m)
+  cm = commit -m                             # Safe
+
+  #########################
+  # Logs & History
+  #########################
+
+  # A readable graph of commits (useful for branch discussions)
+  # 'lol' stands for "log oneline graph" - great for quick visuals (not to be confused with git rofl)
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit  # Safe
+
+  # Show ALL branches with the same visual
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all  # Safe
+
+  # Quickly see recent history (useful when context switching)
+  wtf = log --oneline --decorate -5  # Safe
+
+  # Show just the last commit on the current branch
+  last = log -1 HEAD                # Safe
+
+  #########################
+  # Diffing
+  #########################
+
+  # Show unstaged changes
+  d = diff                          # Safe
+
+  # Show staged diff (before commit)
+  dc = diff --cached                # Safe
+
+  # Show simple summary (what changed, not how)
+  ds = diff --stat                  # Safe
+
+  #########################
+  # Branch Hygiene
+  #########################
+
+  # List branches sorted by most recent commit activity
+  # Helpful for cleaning up branches or picking a review
+  recent = branch --sort=-committerdate   # Helpful
+
+  # Safely delete merged branches (excludes current)
+  # WARNING: this only deletes branches merged into current
+  cleanup = !"git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"  # Power
+
+  #########################
+  # Quality-of-Life Helpers
+  #########################
+
+  # Amend without modifying commit message (quick fix)
+  amend = commit --amend --no-edit  # Helpful
+
+  # Undo last commit but keep changes staged
+  # Useful when you forgot to update the message or add files
+  uncommit = reset --soft HEAD~1     # Power
+
+  #########################
+  # Remote Awareness
+  #########################
+
+  # Show configured remotes and URLs
+  who = remote -v                   # Safe
+
+  # Pull with rebase (keeps history linear)
+  up = pull --rebase               # Helpful
+
+  #########################
+  # Meta / Exploration
+  #########################
+
+  # Reveal top level of repo (good for scripts)
+  root = rev-parse --show-toplevel  # Safe
+
+  # List all configured git aliases (self-documenting)
+  aliases = config --get-regexp '^alias\\.'  # Safe
+
+#######################################################################
+# End Git Aliases
+#######################################################################
