@@ -1,0 +1,112 @@
+#######################################################################
+# Curl Aliases
+# Maintained by Foundry81
+#
+# Purpose:
+# - Reduce repetition when working with HTTP APIs
+# - Improve visibility into requests and responses
+# - Encourage readable, composable curl usage
+#
+# Philosophy:
+# - Aliases should shorten common patterns, not hide curl
+# - Output should favor clarity over cleverness
+# - Most aliases are intended to be combined
+#
+# Safety Legend:
+# Safe     - Read-only, no side effects
+# Helpful  - Improves workflow with low risk
+# Power    - Assumes understanding of HTTP behavior
+#
+# NOTE:
+# Some aliases assume `jq` is installed for JSON formatting.
+#######################################################################
+
+#########################
+# Visibility & Debugging
+#########################
+
+# Fetch headers only (status codes, redirects, caching)
+alias curlh='curl -I'                         # Safe
+
+# Verbose output (TLS, DNS, redirects)
+alias curlv='curl -v'                         # Safe
+
+# Very verbose output (when troubleshooting gets serious)
+alias curlvv='curl -vvv'                      # Safe
+
+#########################
+# Safer Defaults
+#########################
+
+# Silent mode (no progress meter)
+alias curls='curl -s'                         # Safe
+
+# Silent, but still show errors
+alias curlS='curl -sS'                        # Safe
+
+# Follow redirects
+alias curlL='curl -L'                         # Safe
+
+#########################
+# JSON-Centric Defaults
+#########################
+
+# Request JSON responses
+alias curlj='curl -H "Accept: application/json"'        # Safe
+
+# Request JSON responses, silently
+alias curljs='curl -H "Accept: application/json" -sS'  # Safe
+
+# Send JSON payloads
+alias curljson='curl -H "Content-Type: application/json"'  # Safe
+
+#########################
+# Pretty Output (jq)
+#########################
+
+# Pretty-print JSON output
+alias curlp='curl -sS | jq .'                # Helpful
+
+# Show headers and pretty-print JSON body
+alias curlph='curl -sS -D - | jq .'           # Helpful
+
+#########################
+# Timing & Performance
+#########################
+
+# Measure total request time
+alias curltime='curl -w "\nTotal: %{time_total}s\n" -o /dev/null -sS'  # Safe
+
+# Measure time to first byte (TTFB)
+alias curlttfb='curl -w "\nTTFB: %{time_starttransfer}s\n" -o /dev/null -sS'  # Safe
+
+#########################
+# Authentication Patterns
+#########################
+
+# Bearer token authentication
+# Expects TOKEN to be set as an environment variable
+alias curlbearer='curl -H "Authorization: Bearer $TOKEN"'  # Helpful
+
+#########################
+# HTTP Method Helpers
+#########################
+
+# Explicit HTTP methods (improves readability)
+alias curlget='curl -X GET'                  # Safe
+alias curlpost='curl -X POST'                # Safe
+alias curlput='curl -X PUT'                  # Safe
+alias curlpatch='curl -X PATCH'              # Safe
+alias curldelete='curl -X DELETE'             # Safe
+
+#########################
+# Teaching by Composition
+#########################
+
+# These aliases are designed to be stacked, for example:
+# curljs https://api.example.com | jq '.data[].id'
+#
+# The goal is readability, not abstraction.
+#######################################################################
+# End Curl Aliases
+#######################################################################
