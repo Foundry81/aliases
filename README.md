@@ -1,7 +1,9 @@
 # Aliases
 
-A curated collection of shell and application-native aliases designed to reduce friction, improve visibility, and encourage safer workflows.
+A curated collection of [shell](./shell) and [application-native](./all) aliases designed to reduce friction, improve visibility, and encourage safer workflows for Docker, Curl, Git and more.
+
 This repository treats aliases as learning tools, not just shortcuts.
+
 
 ## What this repo is
 

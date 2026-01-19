@@ -1,0 +1,51 @@
+#######################################################################
+# Twingate CLI Aliases
+# Maintained by Foundry81
+#
+# Purpose:
+# - Reduce friction when interacting with the Twingate CLI
+# - Eliminate space-dependent commands (Matt's Lazy Logic(tm) at work here)
+# - Favor speed and muscle memory over ceremony
+#
+# Philosophy:
+# - Aliases should remove annoyance, not add abstraction
+# - No aliases that hide intent
+# - If it needs documentation, it probably does not belong here
+#
+# Safety Legend:
+# Safe     - Read-only or status checks
+# Control  - Starts or stops client behavior
+#
+# NOTE:
+# These aliases assume the `twingate` CLI is installed and available
+# in PATH.
+
+#######################################################################
+
+#########################
+# Client Control
+#########################
+
+# Start the Twingate client
+alias tgup='twingate start'                       # Control
+
+# Stop the Twingate client
+alias tgdn='twingate stop'                        # Control
+
+#########################
+# Visibility & Status
+#########################
+
+# Show current client status (online/offline, connector state)
+alias tgst='twingate status'                      # Safe
+
+#########################
+# Networking Configuration
+#########################
+
+# View or modify networking configuration
+alias tgcn='twingate config networking'           # Safe
+
+#######################################################################
+# End Twingate CLI Aliases
+#######################################################################
